@@ -42,21 +42,25 @@ public class PatientService {
     Patient patient = patientRepository.findById(id)
                                        .orElseThrow(
                                          () -> new PatientNotFoundException("Patient not found with ID: " + id));
-    
     // only update patient email if it has changed or/and if it is not already taken
     if (!patient.getEmail().equals(patientRequestDTO.getEmail()) &&
       patientRepository.existsByEmail(patientRequestDTO.getEmail())) {
       throw new EmailAlreadyExistsException(
         "A patient with this email already exists: " + patientRequestDTO.getEmail());
     }
-    
     patient.setName(patientRequestDTO.getName());
     patient.setEmail(patientRequestDTO.getEmail());
     patient.setAddress(patientRequestDTO.getAddress());
     patient.setDateOfBirth(LocalDate.parse(patientRequestDTO.getDateOfBirth()));
-    
     Patient updatedPatient = patientRepository.save(patient);
     return PatientMapper.toDTO(updatedPatient);
+  }
+  
+  public void deletePatient(UUID id) {
+    if (!patientRepository.existsById(id)) {
+      throw new PatientNotFoundException("Patient not found with ID: " + id);
+    }
+    patientRepository.deleteById(id);
   }
   
 }
