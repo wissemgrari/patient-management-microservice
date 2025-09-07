@@ -7,8 +7,8 @@ spring:
       server:
         webflux:
           routes:
-            ## REST CLIENT
-            ## API GATEWAY -> http://patient-service:4000/api/patients
+            ## REST CLIENT -> http://localhost:4004/api/patients
+            ## API GATEWAY -> http://patient-service:4000/patients
             ## PATIENT SERVICE (SPRING BOOT APP) -> /patients -> Patients Array
             - id: patient-service-route
               uri: http://patient-service:4000
