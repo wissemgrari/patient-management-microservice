@@ -16,6 +16,7 @@ spring:
                 - Path=/api/patients/**
               filters:
                 - StripPrefix=1
+                - JwtValidation # Spring resolves this to a bean named JwtValidationGatewayFilterFactory based on naming convention
 
             # api-docs-patient-route
             # Sent by: REST client -> /api-docs/patients
