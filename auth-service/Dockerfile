@@ -16,7 +16,7 @@ WORKDIR /app
 
 COPY --from=builder ./app/target/auth-service-0.0.1-SNAPSHOT.jar ./app.jar
 
+# REMOVE EXPOSE IN PRODUCTION: This service should only be accessible through the API Gateway
 EXPOSE 4005
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
-

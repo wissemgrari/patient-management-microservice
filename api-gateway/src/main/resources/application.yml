@@ -7,9 +7,9 @@ spring:
       server:
         webflux:
           routes:
-            ## REST CLIENT -> http://localhost:4004/api/patients
-            ## API GATEWAY -> http://patient-service:4000/patients
-            ## PATIENT SERVICE (SPRING BOOT APP) -> /patients -> Patients Array
+            # patient-service-route
+            # Sent by: REST client -> /api/patients/**
+            # Forwarded by: API Gateway -> http://patient-service:4000/patients/**
             - id: patient-service-route
               uri: http://patient-service:4000
               predicates:
@@ -17,9 +17,22 @@ spring:
               filters:
                 - StripPrefix=1
 
+            # api-docs-patient-route
+            # Sent by: REST client -> /api-docs/patients
+            # Forwarded by: API Gateway -> http://patient-service:4000/v3/api-docs
             - id: api-docs-patient-route
               uri: http://patient-service:4000
               predicates:
                 - Path=/api-docs/patients
               filters:
                 - RewritePath=/api-docs/patients,/v3/api-docs
+
+            # auth-service-route
+            # Sent by: REST client -> /auth/**
+            # Forwarded by: API Gateway -> http://auth-service:4005/**
+            - id: auth-service-route
+              uri: http://auth-service:4005
+              predicates:
+                - Path=/auth/**
+              filters:
+                - StripPrefix=1
