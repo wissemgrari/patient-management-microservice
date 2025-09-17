@@ -1,0 +1,49 @@
+server:
+  port: 4004
+
+spring:
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            # auth-service-route
+            # Sent by: REST client -> /auth/**
+            # Forwarded by: API Gateway -> http://auth-service:4005/**
+            - id: auth-service-route
+              uri: http://host.docker.internal:4005
+              predicates:
+                - Path=/auth/**
+              filters:
+                - StripPrefix=1
+
+            # patient-service-route
+            # Sent by: REST client -> /api/patients/**
+            # Forwarded by: API Gateway -> http://patient-service:4000/patients/**
+            - id: patient-service-route
+              uri: http://host.docker.internal:4000
+              predicates:
+                - Path=/api/patients/**
+              filters:
+                - StripPrefix=1
+                - JwtValidation # Spring resolves this to a bean named JwtValidationGatewayFilterFactory based on naming convention
+
+            # api-docs-patient-route
+            # Sent by: REST client -> /api-docs/patients
+            # Forwarded by: API Gateway -> http://patient-service:4000/v3/api-docs
+            - id: api-docs-patient-route
+              uri: http://host.docker.internal:4000
+              predicates:
+                - Path=/api-docs/patients
+              filters:
+                - RewritePath=/api-docs/patients,/v3/api-docs
+
+            # api-docs-auth-route
+            # Sent by: REST client -> /api-docs/auth
+            # Forwarded by: API Gateway -> http://auth-service:4005/v3/api-docs
+            - id: api-docs-auth-route
+              uri: http://host.docker.internal:4005
+              predicates:
+                - Path=/api-docs/auth
+              filters:
+                - RewritePath=/api-docs/auth,/v3/api-docs
