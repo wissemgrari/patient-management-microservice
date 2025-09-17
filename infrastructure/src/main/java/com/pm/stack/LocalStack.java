@@ -49,28 +49,6 @@ public class LocalStack extends Stack {
 
   }
 
-  public static void main(String[] args) {
-    App app = new App(AppProps.builder().outdir("./cdk.out").build());
-
-    // Use BootstraplessSynthesizer() for LocalStack to avoid AWS CDK bootstrapping.
-    // This enables local development and testing without deploying resources to AWS.
-    StackProps props = StackProps.builder().synthesizer(new BootstraplessSynthesizer()).build();
-
-    new LocalStack(app, "localstack", props);
-    app.synth();
-    System.out.println("App synthesizing in progress...");
-  }
-
-  private Cluster createEcsCluster() {
-    return Cluster.Builder
-        .create(this, "PatientManagementCluster")
-        .vpc(vpc)
-        .defaultCloudMapNamespace(CloudMapNamespaceOptions.builder()
-            .name("patient-management.local")
-            .build())
-        .build();
-  }
-
   private Vpc createVpc() {
     return Vpc.Builder.create(this, "PatientManagementVPC")
         .vpcName("PatientManagementVPC")
@@ -119,6 +97,27 @@ public class LocalStack extends Stack {
             .brokerAzDistribution("DEFAULT")
             .build())
         .build();
+  }
+
+  private Cluster createEcsCluster() {
+    return Cluster.Builder.create(this, "PatientManagementCluster")
+        .vpc(vpc)
+        .defaultCloudMapNamespace(CloudMapNamespaceOptions.builder()
+            .name("patient-management.local")
+            .build())
+        .build();
+  }
+
+  public static void main(String[] args) {
+    App app = new App(AppProps.builder().outdir("./cdk.out").build());
+
+    // Use BootstraplessSynthesizer() for LocalStack to avoid AWS CDK bootstrapping.
+    // This enables local development and testing without deploying resources to AWS.
+    StackProps props = StackProps.builder().synthesizer(new BootstraplessSynthesizer()).build();
+
+    new LocalStack(app, "localstack", props);
+    app.synth();
+    System.out.println("App synthesizing in progress...");
   }
 
 }
