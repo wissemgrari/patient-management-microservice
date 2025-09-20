@@ -1128,7 +1128,7 @@
                   "instanceType": "kafka.m5.xlarge",
                   "brokerAzDistribution": "DEFAULT"
                 },
-                "clusterName": "kafka-cluster",
+                "clusterName": "kafa-cluster",
                 "kafkaVersion": "2.8.0",
                 "numberOfBrokerNodes": 1
               }
@@ -1275,7 +1275,7 @@
                           },
                           {
                             "name": "JWT_SECRET",
-                            "value": "cG9vcmluZGl2aWR1YWxjaGVtaWNhbHJheXNtYWluaG90bmVlZHNjb3BwZXJzcXVhcmU="
+                            "value": "Y2hhVEc3aHJnb0hYTzMyZ2ZqVkpiZ1RkZG93YWxrUkM="
                           },
                           {
                             "name": "SPRING_DATASOURCE_URL",
@@ -1322,16 +1322,16 @@
                             "value": "update"
                           },
                           {
+                            "name": "SPRING_DATASOURCE_HIKARI_INITIALIZATION_FAIL_TIMEOUT",
+                            "value": "60000"
+                          },
+                          {
                             "name": "SPRING_DATASOURCE_USERNAME",
                             "value": "admin_user"
                           },
                           {
                             "name": "SPRING_KAFKA_BOOTSTRAP_SERVERS",
                             "value": "localhost.localstack.cloud:4510, localhost.localstack.cloud:4511, localhost.localstack.cloud:4512"
-                          },
-                          {
-                            "name": "SPRING_DATASOURCE_HIKARY_INITIALIZATION_FAIL_TIMEOUT",
-                            "value": "60000"
                           }
                         ]
                       }
@@ -2370,6 +2370,10 @@
                         },
                         "environment": [
                           {
+                            "name": "BILLING_SERVICE_GRPC_PORT",
+                            "value": "9001"
+                          },
+                          {
                             "name": "SPRING_SQL_INIT_MODE",
                             "value": "always"
                           },
@@ -2418,8 +2422,8 @@
                             "value": "update"
                           },
                           {
-                            "name": "BILLING_SERVICE_PORT",
-                            "value": "9001"
+                            "name": "SPRING_DATASOURCE_HIKARI_INITIALIZATION_FAIL_TIMEOUT",
+                            "value": "60000"
                           },
                           {
                             "name": "SPRING_DATASOURCE_USERNAME",
@@ -2428,10 +2432,6 @@
                           {
                             "name": "SPRING_KAFKA_BOOTSTRAP_SERVERS",
                             "value": "localhost.localstack.cloud:4510, localhost.localstack.cloud:4511, localhost.localstack.cloud:4512"
-                          },
-                          {
-                            "name": "SPRING_DATASOURCE_HIKARY_INITIALIZATION_FAIL_TIMEOUT",
-                            "value": "60000"
                           },
                           {
                             "name": "BILLING_SERVICE_ADDRESS",
@@ -2769,7 +2769,7 @@
                           "logDriver": "awslogs",
                           "options": {
                             "awslogs-group": {
-                              "Ref": "APIGatewayLogGroupCDBB0658"
+                              "Ref": "ApiGatewayLogGroupA9770429"
                             },
                             "awslogs-stream-prefix": "api-gateway",
                             "awslogs-region": {
@@ -2881,7 +2881,7 @@
                                   "Effect": "Allow",
                                   "Resource": {
                                     "Fn::GetAtt": [
-                                      "APIGatewayLogGroupCDBB0658",
+                                      "ApiGatewayLogGroupA9770429",
                                       "Arn"
                                     ]
                                   }
@@ -2923,13 +2923,13 @@
               "metadata": []
             }
           },
-          "APIGatewayLogGroup": {
-            "id": "APIGatewayLogGroup",
-            "path": "localstack/APIGatewayLogGroup",
+          "ApiGatewayLogGroup": {
+            "id": "ApiGatewayLogGroup",
+            "path": "localstack/ApiGatewayLogGroup",
             "children": {
               "Resource": {
                 "id": "Resource",
-                "path": "localstack/APIGatewayLogGroup/Resource",
+                "path": "localstack/ApiGatewayLogGroup/Resource",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::Logs::LogGroup",
                   "aws:cdk:cloudformation:props": {

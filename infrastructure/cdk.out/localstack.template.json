@@ -658,7 +658,7 @@
      ],
      "InstanceType": "kafka.m5.xlarge"
     },
-    "ClusterName": "kafka-cluster",
+     "ClusterName": "kafa-cluster",
     "KafkaVersion": "2.8.0",
     "NumberOfBrokerNodes": 1
    }
@@ -704,7 +704,7 @@
        },
        {
         "Name": "JWT_SECRET",
-        "Value": "cG9vcmluZGl2aWR1YWxjaGVtaWNhbHJheXNtYWluaG90bmVlZHNjb3BwZXJzcXVhcmU="
+         "Value": "Y2hhVEc3aHJnb0hYTzMyZ2ZqVkpiZ1RkZG93YWxrUkM="
        },
        {
         "Name": "SPRING_DATASOURCE_URL",
@@ -751,16 +751,16 @@
         "Value": "update"
        },
        {
+         "Name": "SPRING_DATASOURCE_HIKARI_INITIALIZATION_FAIL_TIMEOUT",
+         "Value": "60000"
+       },
+        {
         "Name": "SPRING_DATASOURCE_USERNAME",
         "Value": "admin_user"
        },
        {
         "Name": "SPRING_KAFKA_BOOTSTRAP_SERVERS",
         "Value": "localhost.localstack.cloud:4510, localhost.localstack.cloud:4511, localhost.localstack.cloud:4512"
-       },
-       {
-        "Name": "SPRING_DATASOURCE_HIKARY_INITIALIZATION_FAIL_TIMEOUT",
-        "Value": "60000"
        }
       ],
       "Essential": true,
@@ -1360,6 +1360,10 @@
      {
       "Environment": [
        {
+         "Name": "BILLING_SERVICE_GRPC_PORT",
+         "Value": "9001"
+       },
+        {
         "Name": "SPRING_SQL_INIT_MODE",
         "Value": "always"
        },
@@ -1408,8 +1412,8 @@
         "Value": "update"
        },
        {
-        "Name": "BILLING_SERVICE_PORT",
-        "Value": "9001"
+         "Name": "SPRING_DATASOURCE_HIKARI_INITIALIZATION_FAIL_TIMEOUT",
+         "Value": "60000"
        },
        {
         "Name": "SPRING_DATASOURCE_USERNAME",
@@ -1418,10 +1422,6 @@
        {
         "Name": "SPRING_KAFKA_BOOTSTRAP_SERVERS",
         "Value": "localhost.localstack.cloud:4510, localhost.localstack.cloud:4511, localhost.localstack.cloud:4512"
-       },
-       {
-        "Name": "SPRING_DATASOURCE_HIKARY_INITIALIZATION_FAIL_TIMEOUT",
-        "Value": "60000"
        },
        {
         "Name": "BILLING_SERVICE_ADDRESS",
@@ -1650,7 +1650,7 @@
        "LogDriver": "awslogs",
        "Options": {
         "awslogs-group": {
-         "Ref": "APIGatewayLogGroupCDBB0658"
+          "Ref": "ApiGatewayLogGroupA9770429"
         },
         "awslogs-stream-prefix": "api-gateway",
         "awslogs-region": {
@@ -1719,7 +1719,7 @@
        "Effect": "Allow",
        "Resource": {
         "Fn::GetAtt": [
-         "APIGatewayLogGroupCDBB0658",
+          "ApiGatewayLogGroupA9770429",
          "Arn"
         ]
        }
@@ -1735,7 +1735,7 @@
     ]
    }
   },
-  "APIGatewayLogGroupCDBB0658": {
+   "ApiGatewayLogGroupA9770429": {
    "Type": "AWS::Logs::LogGroup",
    "Properties": {
     "LogGroupName": "/ecs/api-gateway",
